@@ -28,7 +28,7 @@ int main()
         return 1;
     }
 
-    if((first[0] == circle[0]) || (first[0] == circle[0] - 32)){
+    if((first[0] == circle[0]) || (first[0] == circle[0] - ' ')){
         c_ch_flag = circle_check(first, circle);
     } else {
         printf("Unexpected figure!\n");
@@ -61,7 +61,7 @@ int main()
         return 5;
     }
 
-    if((second[0] == circle[0]) || (second[0] == circle[0] - 32)){
+    if((second[0] == circle[0]) || (second[0] == circle[0] - ' ')){
         c_ch_flag = circle_check(second, circle);
     } else {
         printf("Unexpected figure!\n");
@@ -85,7 +85,7 @@ int circle_check(char a[], char b[])
     int flag = 0;
     int i;
     for(i = 1; a[i] != '('; i++){
-        if((a[i] == b[i]) || (a[i] == b[i] - 32)){
+        if((a[i] == b[i]) || (a[i] == b[i] - ' ')){
             flag = 1;
         } else {
             flag = 0;
