@@ -2,102 +2,119 @@
 #include <stdlib.h>
 #define STRLEN 50
 
+typedef struct{
+    int x;
+    int y;
+} point;
+
+typedef struct{
+    point first;
+    int radius;
+} Circle;
+
+typedef struct{
+    point first;
+    point second;
+    point third;
+    point fourth;
+} Triangle;
+
 int main()
 {
-    int ctd(char a[], int count, int chrlen);
+    int init(int num, char a[]);
+    int ctd(char a[], int count, int chrlen, int exp_num);
     int circle_check(char a[], char b[]);
+    int triangle_check(char a[], char b[]);
     char first[STRLEN];
     char second[STRLEN];
-    char circle[STRLEN] = {"circle                                        "};
-    int count;
-    //char triangle[9] = {"triangle"};
-    int c_ch_flag = 0;
+    char third[STRLEN];
 
-    printf("Enter first figure:\n");
+    init(1, first);
+    init(2, second);
+    init(3, third);
+
+    return 0;
+}
+
+int init(int num, char a[])
+{
+    int ctd(char a[], int count, int chrlen, int exp_num);
+    int circle_check(char a[], char b[]);
+    int triangle_check(char a[], char b[]);
+    char triangle[9] = {"triangle"};
+    char circle[7] = {"circle"};
+    int figure_flag = 0;
     int chrlen = 0;
-    while((first[chrlen] = getchar()) != '\n'){
-        if(first[chrlen] == '('){
+    int count = 0;
+    int flag = 0;
+
+    printf("Enter figure %d:\n", num);
+    while((a[chrlen] = getchar()) != '\n'){
+        if(a[chrlen] == '('){
             count = chrlen;
         }
         chrlen++;
     }
-    first[chrlen] = '\0';
+    a[chrlen] = '\0';
 
-    if(first[chrlen - 1] != ')'){
-        printf("Expected ')'!\n");
+    if((a[0] == circle[0]) || (a[0] == circle[0] - ' ')){
+        if((figure_flag = circle_check(a, circle)) == 10){
+            return 1;
+        } else {
+            flag = ctd(a, count, chrlen, 3); 
+            if(flag == 10){
+                return 1;
+            }
+        }
+
+    } else if ((a[0] == triangle[0]) || (a[0] == triangle[0] - ' ')){
+        if((figure_flag = triangle_check(a, triangle)) == 10){
+            return 1;
+        } else {
+            flag = ctd(a, count, chrlen, 4); 
+            if(flag == 10){
+                return 1;
+            }
+        }
+
+    } else {
+        printf("Unexpected figure!\n");
         return 1;
     }
 
-    if((first[0] == circle[0]) || (first[0] == circle[0] - ' ')){
-        c_ch_flag = circle_check(first, circle);
-    } else {
-        printf("Unexpected figure!\n");
-        return 2;
-    }
-
-    if(c_ch_flag == 10){
-        return 3;
-    }
-
-    int flag;
-    flag = ctd(first, count, chrlen); 
-    if(flag == 10){
-        return 4;
-    }
-
-    int cool = 0;
-    count = 0;
-    printf("Enter second figure!\n");
-    while((second[cool] = getchar()) != '\n'){
-        if(second[cool] == '('){
-            count = cool;
-        }
-        cool++;
-    }
-    second[cool] = '\0';
-
-    if(second[cool - 1] != ')'){
-        printf("Expected ')'!\n");
-        return 5;
-    }
-
-    if((second[0] == circle[0]) || (second[0] == circle[0] - ' ')){
-        c_ch_flag = circle_check(second, circle);
-    } else {
-        printf("Unexpected figure!\n");
-        return 6;
-    }
-
-    if(c_ch_flag == 10){
-        return 7;
-    }
-
-    flag = ctd(second, count, cool); 
-    if(flag == 10){
-        return 8;
-    }
-     
     return 0;
+
 }
 
 int circle_check(char a[], char b[])
 {
-    int flag = 0;
-    int i;
-    for(i = 1; a[i] != '('; i++){
+    for(int i = 1; a[i] != '('; i++){
         if((a[i] == b[i]) || (a[i] == b[i] - ' ')){
-            flag = 1;
+            continue;
         } else {
-            flag = 0;
-            printf("Unexpected figure!\n");
+            printf("Unexpected figure. Maybe you put something between 'circle' and '(', check it.\n");
             return 10;
         }
     }
 
-    return flag;
+    return 0;
+
 }
 
-int ctd(char a[], int count, int chrlen)
+int triangle_check(char a[], char b[])
+{
+    for(int i = 1; a[i] != '('; i++){
+        if((a[i] == b[i]) || (a[i] == b[i] - ' ')){
+        } else {
+            printf("Unexpected figure or you put something between 'triangle' and '('\n");
+            return 10;
+        }
+    }
+
+    return 0;
+}
+
+int ctd(char a[], int count, int chrlen, int exp_num)
 {
 
     for(int k = count + 1; k < chrlen - 1; k++){
@@ -109,10 +126,10 @@ int ctd(char a[], int count, int chrlen)
         }
     }
 
-    double otvet[3];
-    char converter[STRLEN] = {'0'};
+    double otvet[8] = {0};
+    char converter[20] = {'0'};
 
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i <= 7; i++){
         int k = 0;
         for(count += 1; count < chrlen; count++){
             if(a[count] == ' ' || a[count] == ')' || a[count] == ','){
@@ -129,7 +146,22 @@ int ctd(char a[], int count, int chrlen)
             }
         }
         otvet[i] = atof(converter);
-        printf("%lf\n", otvet[i]);
+    }
+    if(exp_num == 3){
+        printf("Circle's x = %.2lf, y = %.2lf\n", otvet[0], otvet[1]);
+        printf("Circle's radius = %.2lf\n", otvet[2]);
+    }
+
+    if(exp_num == 4){
+
+        if((otvet[0] != otvet[6]) && (otvet[1] != otvet[7])){
+            printf("First and last coordinate can't be different!\n");
+            return 10;
+        }
+        
+        for(int k = 0; k < exp_num; k++){
+            printf("Triangle's x%d = %.2lf, y%d = %.2lf\n", k+1, otvet[k*2], k+1, otvet[k*2 + 1]);
+        }
     }
     
     return 0;
