@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define STRLEN 50
+#define SQR(x) x * x
 
 typedef struct{
     int x;
@@ -28,10 +30,20 @@ int main()
     char first[STRLEN];
     char second[STRLEN];
     char third[STRLEN];
+    int flag;
 
-    init(1, first);
-    init(2, second);
-    init(3, third);
+    flag = init(1, first);
+    if(flag == 10){
+        return 10;
+    }
+    flag = init(2, second);
+    if(flag == 10){
+        return 10;
+    }
+    flag = init(3, third);
+    if(flag == 10){
+        return 10;
+    }
 
     return 0;
 }
@@ -48,7 +60,7 @@ int init(int num, char a[])
     int count = 0;
     int flag = 0;
 
-    printf("Enter figure %d:\n", num);
+    printf("Enter figure %d\n(example: circle(x y, radius), triangle(x1 y1, x2 y2, x3 y3, x4 y4)):\n", num);
     while((a[chrlen] = getchar()) != '\n'){
         if(a[chrlen] == '('){
             count = chrlen;
@@ -59,21 +71,21 @@ int init(int num, char a[])
 
     if((a[0] == circle[0]) || (a[0] == circle[0] - ' ')){
         if((figure_flag = circle_check(a, circle)) == 10){
-            return 1;
+            return 10;
         } else {
             flag = ctd(a, count, chrlen, 3); 
             if(flag == 10){
-                return 1;
+                return 10;
             }
         }
 
     } else if ((a[0] == triangle[0]) || (a[0] == triangle[0] - ' ')){
         if((figure_flag = triangle_check(a, triangle)) == 10){
-            return 1;
+            return 10;
         } else {
             flag = ctd(a, count, chrlen, 4); 
             if(flag == 10){
-                return 1;
+                return 10;
             }
         }
 
@@ -116,7 +128,7 @@ int triangle_check(char a[], char b[])
 
 int ctd(char a[], int count, int chrlen, int exp_num)
 {
-
+    double perimeter(double a[], int exp_num);
     for(int k = count + 1; k < chrlen - 1; k++){
         if(a[k] == ' ' || a[k] == ',' || a[k] == '.' || ('0' <= a[k] && a[k] <= '9')){  // проверка, что при вводе координат нет никакаих букв и т.д
             continue;
@@ -124,6 +136,11 @@ int ctd(char a[], int count, int chrlen, int exp_num)
             printf("Incorret input!\n");
             return 10;
         }
+    }
+
+    if(a[chrlen - 1] != ')'){
+        printf("Expected ')'\n");
+        return 10;
     }
 
     double otvet[8] = {0};
@@ -150,6 +167,7 @@ int ctd(char a[], int count, int chrlen, int exp_num)
     if(exp_num == 3){
         printf("Circle's x = %.2lf, y = %.2lf\n", otvet[0], otvet[1]);
         printf("Circle's radius = %.2lf\n", otvet[2]);
+        printf("Perimeter of circle = %lf\n", perimeter(otvet, exp_num));
     }
 
     if(exp_num == 4){
@@ -162,7 +180,24 @@ int ctd(char a[], int count, int chrlen, int exp_num)
         for(int k = 0; k < exp_num; k++){
             printf("Triangle's x%d = %.2lf, y%d = %.2lf\n", k+1, otvet[k*2], k+1, otvet[k*2 + 1]);
         }
+        printf("Perimeter of triangle = %.2lf\n", perimeter(otvet, exp_num));
     }
     
     return 0;
+}
+
+double perimeter(double a[], int exp_num)
+{
+    double answer;
+    if(exp_num == 3){
+        answer = 2 * M_PI * a[2];
+    } else {
+        int first_side = sqrt( SQR((a[3] - a[1])) + SQR((a[2] - a[0])) );
+        int second_side = sqrt( SQR((a[5] - a[3])) + SQR((a[4] - a[2])) );
+        int third_side = sqrt( SQR((a[5] - a[1])) + SQR((a[4] - a[0])) );
+        answer = first_side + second_side + third_side;
+    }
+    
+    return answer;
+
 }
