@@ -3,23 +3,16 @@
 
 int main()
 {
-    char first[STRLEN];
-    char second[STRLEN];
-    char third[STRLEN];
+    char mas[STRLEN];
     int flag;
 
-    flag = init(1, first);
-    if(flag == 10){
-        return 10;
+    for(int i = 1; i <= 3; i++){
+        flag = init(i, mas);
+        if(flag == 10){
+            return 10;
+        }
     }
-    flag = init(2, second);
-    if(flag == 10){
-        return 10;
-    }
-    flag = init(3, third);
-    if(flag == 10){
-        return 10;
-    }
+    
 
     return 0;
 }
