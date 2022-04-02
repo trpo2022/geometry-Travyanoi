@@ -23,6 +23,7 @@ int ctd(char a[], int count, int chrlen, int exp_num);
 int circle_check(char a[], char b[]);
 int triangle_check(char a[], char b[]);
 double perimeter(double a[], int exp_num);
+double volume(double a[], int exp_num);
 
 
 #endif
