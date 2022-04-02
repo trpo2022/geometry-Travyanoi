@@ -120,6 +120,7 @@ int ctd(char a[], int count, int chrlen, int exp_num)
         printf("Circle's x = %.2lf, y = %.2lf\n", otvet[0], otvet[1]);
         printf("Circle's radius = %.2lf\n", otvet[2]);
         printf("Perimeter of circle = %lf\n", perimeter(otvet, exp_num));
+        printf("Volume of circle = %lf\n", volume(otvet, exp_num));
     }
 
     if(exp_num == 4){
@@ -133,6 +134,7 @@ int ctd(char a[], int count, int chrlen, int exp_num)
             printf("Triangle's x%d = %.2lf, y%d = %.2lf\n", k+1, otvet[k*2], k+1, otvet[k*2 + 1]);
         }
         printf("Perimeter of triangle = %.2lf\n", perimeter(otvet, exp_num));
+        printf("Volume of triangle = %.2lf\n", volume(otvet, exp_num));
     }
     
     return 0;
@@ -144,12 +146,29 @@ double perimeter(double a[], int exp_num)
     if(exp_num == 3){
         answer = 2 * M_PI * a[2];
     } else {
-        int first_side = sqrt( SQR((a[3] - a[1])) + SQR((a[2] - a[0])) );
-        int second_side = sqrt( SQR((a[5] - a[3])) + SQR((a[4] - a[2])) );
-        int third_side = sqrt( SQR((a[5] - a[1])) + SQR((a[4] - a[0])) );
+        double first_side = sqrt( SQR((a[3] - a[1])) + SQR((a[2] - a[0])) );
+        double second_side = sqrt( SQR((a[5] - a[3])) + SQR((a[4] - a[2])) );
+        double third_side = sqrt( SQR((a[5] - a[1])) + SQR((a[4] - a[0])) );
         answer = first_side + second_side + third_side;
     }
     
+    return answer;
+
+}
+
+double volume(double a[], int exp_num)
+{
+    double answer;
+    if(exp_num == 3){
+        answer = M_PI * SQR(a[2]);
+    } else {
+        double first_side = sqrt( SQR((a[3] - a[1])) + SQR((a[2] - a[0])) );
+        double second_side = sqrt( SQR((a[5] - a[3])) + SQR((a[4] - a[2])) );
+        double third_side = sqrt( SQR((a[5] - a[1])) + SQR((a[4] - a[0])) );
+        double half_perim = (first_side + second_side + third_side)/2;
+        answer = sqrt(half_perim*(half_perim - first_side)*(half_perim - second_side)*(half_perim - third_side));
+    }
+
     return answer;
 
 }
