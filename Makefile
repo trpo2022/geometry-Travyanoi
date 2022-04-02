@@ -13,14 +13,14 @@ OBJ_LIB_PATH = $(OBJ_DIR)/$(LIB_NAME)
 
 all: $(APP_NAME)
 
-$(APP_NAME): geometry.o libgeometry.o 
-	$(CC) $(CFLAGS) -o bin/$(APP_NAME) $^ -lm
+$(APP_NAME): $(APP_NAME).o $(LIB_NAME).o 
+	$(CC) $(CFLAGS) -o bin/$(APP_NAME) $(OBJ_APP_PATH)/$(APP_NAME).o $(OBJ_LIB_PATH)/$(LIB_NAME).o -lm
 
-geometry.o:
-	$(CC) -c $(CFLAGS) -o $(OBJ_APP_PATH)/$(APP_NAME).o $(APP_PATH)/*.c
+$(APP_NAME).o:
+	$(CC) -c $(CFLAGS) -o $(OBJ_APP_PATH)/$@ $(APP_PATH)/*.c
 
-libgeometry.o:
-	$(CC) -c $(CFLAGS) -o $(OBJ_LIB_PATH)/$(LIB_NAME).o $(LIB_PATH)/*.c
+$(LIB_NAME).o:
+	$(CC) -c $(CFLAGS) -o $(OBJ_LIB_PATH)/$@ $(LIB_PATH)/*.c
 
 run:
 	./$(BIN_DIR)/$(APP_NAME)
