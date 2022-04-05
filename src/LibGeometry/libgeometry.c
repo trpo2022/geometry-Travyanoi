@@ -172,4 +172,3 @@ double volume(double a[], int exp_num)
     return answer;
 
 }
-
