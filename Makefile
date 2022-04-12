@@ -27,3 +27,5 @@ run:
 
 clean:
 	rm $(BIN_DIR)/$(APP_NAME)
+	rm $(OBJ_APP_PATH)/*.o
+	rm $(OBJ_LIB_PATH)/*.o
