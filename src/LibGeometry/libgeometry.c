@@ -1,7 +1,7 @@
 #include <LibGeometry/libgeometry.h>
+#include <malloc.h>
 #include <math.h>
 #include <stdbool.h>
-#include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define SQR(x) x* x
@@ -89,7 +89,7 @@ int ctd(char a[],
         int chrlen,
         int exp_num,
         int num,
-        struct Figure *fig)
+        struct Figure* fig)
 {
     for (int k = count + 1; k < chrlen - 1; k++) {
         if (a[k] == ' ' || a[k] == ',' || a[k] == '.'
@@ -130,7 +130,7 @@ int ctd(char a[],
         }
         otvet[i] = atof(converter);
     }
-    struct Figure *circle2 = (struct Figure*) malloc(sizeof(struct Figure));
+    struct Figure* circle2 = (struct Figure*)malloc(sizeof(struct Figure));
     if (exp_num == 3) {
         if (num == 0) {
             fig[num].name = "First circle";
@@ -151,7 +151,7 @@ int ctd(char a[],
     }
     free(circle2);
 
-    struct Figure *triangle2 = (struct Figure*) malloc(sizeof(struct Figure));
+    struct Figure* triangle2 = (struct Figure*)malloc(sizeof(struct Figure));
     if (exp_num == 4) {
         if ((otvet[0] != otvet[6]) && (otvet[1] != otvet[7])) {
             printf("First and last coordinate can't be different!\n");
@@ -182,7 +182,7 @@ int ctd(char a[],
         }
     }
     free(triangle2);
-    if(num == 2){
+    if (num == 2) {
         intersection_figures(fig);
     }
     return 0;
@@ -221,20 +221,23 @@ double volume(double a[], int exp_num)
     return answer;
 }
 
-struct Figure *fill_circle(double otvet[], int exp_num, struct Figure *circle2)
+struct Figure* fill_circle(double otvet[], int exp_num, struct Figure* circle2)
 {
     circle2->flag_of_figure = 0;
     circle2->first.x = otvet[0];
     circle2->first.y = otvet[1];
     circle2->radius = otvet[2];
-    printf("Circle's x = %.2lf, y = %.2lf\n", circle2->first.x, circle2->first.y);
+    printf("Circle's x = %.2lf, y = %.2lf\n",
+           circle2->first.x,
+           circle2->first.y);
     printf("Circle's radius = %.2lf\n", circle2->radius);
     printf("Perimeter of circle = %lf\n", perimeter(otvet, exp_num));
     printf("Volume of circle = %lf\n", volume(otvet, exp_num));
     return circle2;
 }
 
-struct Figure *fill_triangle(double otvet[], int exp_num, struct Figure *triangle2)
+struct Figure*
+fill_triangle(double otvet[], int exp_num, struct Figure* triangle2)
 {
     triangle2->flag_of_figure = 1;
     triangle2->first.x = otvet[0];
@@ -261,7 +264,7 @@ struct Figure *fill_triangle(double otvet[], int exp_num, struct Figure *triangl
     return triangle2;
 }
 
-struct Figure* intersection_figures(struct Figure *fig)
+struct Figure* intersection_figures(struct Figure* fig)
 {
     if (fig[0].flag_of_figure == 0) {
         if (fig[1].flag_of_figure == 0) {
@@ -284,8 +287,10 @@ int intersection_circle_circle(struct Figure circle1, struct Figure circle2)
 {
     float gip;
     float sum_radius = circle1.radius + circle2.radius;
-    gip = sqrt(SQR(fabs(circle1.first.x - circle2.first.x)) + SQR(fabs(circle1.first.y - circle2.first.y)));
-    if(sum_radius >= gip){
+    gip
+            = sqrt(SQR(fabs(circle1.first.x - circle2.first.x))
+                   + SQR(fabs(circle1.first.y - circle2.first.y)));
+    if (sum_radius >= gip) {
         printf("%s intersects with %s\n", circle1.name, circle2.name);
         return 0;
     } else {
@@ -293,4 +298,3 @@ int intersection_circle_circle(struct Figure circle1, struct Figure circle2)
     }
     return -1;
 }
-
