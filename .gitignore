@@ -1,0 +1,7 @@
+*.c
+*.o
+*.a
+!geometry.c
+!libgeometry.c
+!main.c
+!tests.c
