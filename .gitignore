@@ -1,7 +1,6 @@
 *.c
 *.o
 *.a
-Geometry
 !geometry.c
 !libgeometry.c
 !main.c
