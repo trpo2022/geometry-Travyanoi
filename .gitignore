@@ -1,3 +1,8 @@
-!.gitignore
+*.c
+*.o
+*.a
+Geometry
 !geometry.c
-!Makefile
+!libgeometry.c
+!main.c
+!tests.c
