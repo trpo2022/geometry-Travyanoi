@@ -4,3 +4,5 @@
 Geometry
 !geometry.c
 !libgeometry.c
+!main.c
+!tests.c
